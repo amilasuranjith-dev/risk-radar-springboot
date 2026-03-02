@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -34,5 +36,38 @@ public class DriverRepositoryImpl implements DriverRepository {
             );
         });
         return driverList;
+    }
+
+    @Override
+    public boolean add(Driver driver) {
+        return jdbcTemplate.update("INSERT INTO driver (license_number, first_name, last_name, phone, email, address,hire_date, status, rating, total_trips, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                driver.getLicenseNumber(),
+                driver.getFirstName(),
+                driver.getLastName(),
+                driver.getPhone(),
+                driver.getEmail(),
+                driver.getAddress(),
+                driver.getHireDate(),
+                driver.getStatus(),
+                driver.getRating(),
+                driver.getTotalTrips(),
+                Timestamp.valueOf(LocalDateTime.now()),
+                Timestamp.valueOf(LocalDateTime.now())
+                )>0;
+    }
+
+    @Override
+    public boolean update(Driver driver) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
+    }
+
+    @Override
+    public Driver seachById(Long id) {
+        return null;
     }
 }

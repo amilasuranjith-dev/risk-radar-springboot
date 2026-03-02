@@ -18,4 +18,24 @@ public class DriverServiceImpl implements DriverService {
     public List<Driver> getAll() {
         return driverRepository.getAll();
     }
+
+    @Override
+    public boolean add(Driver driver) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Driver driver) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
+    }
+
+    @Override
+    public Driver searchById(Long id) {
+        return null;
+    }
 }
