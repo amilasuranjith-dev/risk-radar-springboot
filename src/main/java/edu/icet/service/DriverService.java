@@ -1,13 +1,14 @@
 package edu.icet.service;
 
-import edu.icet.model.Driver;
+import edu.icet.dto.DriverRequestDto;
+import edu.icet.dto.DriverResponseDto;
 
 import java.util.List;
 
 public interface DriverService {
-    List<Driver> getAll();
-    boolean add(Driver driver);
-    boolean update(Driver driver);
+    List<DriverResponseDto> getAll();
+    boolean add(DriverRequestDto driverRequest);
+    boolean update(Long id, DriverRequestDto driverRequest);
     boolean deleteById(Long id);
-    Driver searchById(Long id);
+    DriverResponseDto searchById(Long id);
 }

@@ -1,6 +1,7 @@
 package edu.icet.controller;
 
-import edu.icet.model.Driver;
+import edu.icet.dto.DriverRequestDto;
+import edu.icet.dto.DriverResponseDto;
 import edu.icet.service.DriverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -8,37 +9,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/driver")
+@RequestMapping("/api/driver")
 @RequiredArgsConstructor
 public class DriverController {
 
     private final DriverService driverService;
 
     @GetMapping("/get-all")
-    public List<Driver> getAll(){
+    public List<DriverResponseDto> getAll(){
         return driverService.getAll();
     }
 
     @PostMapping("/add")
-    public boolean add(@RequestBody Driver driver){
-        return driverService.add(driver);
+    public boolean add(@RequestBody DriverRequestDto driverRequest){
+        return driverService.add(driverRequest);
     }
 
-    @PutMapping("/update")
-    public boolean update(@RequestBody Driver driver){
-        return driverService.update(driver);
+    @PutMapping("/update/{id}")
+    public boolean update(@PathVariable("id") Long id, @RequestBody DriverRequestDto driverRequest){
+        return driverService.update(id, driverRequest);
     }
 
     @DeleteMapping("/deleteById/{id}")
-    public boolean  dealetById(@PathVariable Long id){
+    public boolean dealetById(@PathVariable("id") Long id){
         return driverService.deleteById(id);
     }
 
     @GetMapping("/searchById/{id}")
-    public Driver searchById(Long id){
+    public DriverResponseDto searchById(@PathVariable("id") Long id){
         return driverService.searchById(id);
     }
-
-
 
 }
