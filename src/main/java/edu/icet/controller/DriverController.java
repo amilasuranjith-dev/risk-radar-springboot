@@ -26,17 +26,17 @@ public class DriverController {
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@PathVariable("id") Long id, @RequestBody DriverRequestDto driverRequest){
+    public boolean update(@PathVariable Long id, @RequestBody DriverRequestDto driverRequest){
         return driverService.update(id, driverRequest);
     }
 
     @DeleteMapping("/deleteById/{id}")
-    public boolean dealetById(@PathVariable("id") Long id){
+    public boolean deleteById(@PathVariable Long id){
         return driverService.deleteById(id);
     }
 
     @GetMapping("/searchById/{id}")
-    public DriverResponseDto searchById(@PathVariable("id") Long id){
+    public DriverResponseDto searchById(@PathVariable Long id){
         return driverService.searchById(id);
     }
 
