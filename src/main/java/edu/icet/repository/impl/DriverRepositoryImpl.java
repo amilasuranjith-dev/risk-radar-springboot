@@ -18,8 +18,8 @@ public class DriverRepositoryImpl implements DriverRepository {
 
     @Override
     public List<Driver> getAll() {
-        List<Driver> driverList = jdbcTemplate.query("SELECT * FROM drivers", (rs, rowNum) -> {
-            return new Driver(
+        return jdbcTemplate.query("SELECT * FROM drivers", (rs, rowNum) ->
+            new Driver(
                     rs.getLong(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -33,14 +33,13 @@ public class DriverRepositoryImpl implements DriverRepository {
                     rs.getInt(11),
                     rs.getTimestamp(12).toLocalDateTime(),
                     rs.getTimestamp(13).toLocalDateTime()
-            );
-        });
-        return driverList;
+            )
+        );
     }
 
     @Override
     public boolean add(Driver driver) {
-        return jdbcTemplate.update("INSERT INTO driver (license_number, first_name, last_name, phone, email, address,hire_date, status, rating, total_trips, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        return jdbcTemplate.update("INSERT INTO drivers (license_number, first_name, last_name, phone, email, address, hire_date, status, rating, total_trips, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 driver.getLicenseNumber(),
                 driver.getFirstName(),
                 driver.getLastName(),
@@ -53,7 +52,7 @@ public class DriverRepositoryImpl implements DriverRepository {
                 driver.getTotalTrips(),
                 Timestamp.valueOf(LocalDateTime.now()),
                 Timestamp.valueOf(LocalDateTime.now())
-                )>0;
+                ) > 0;
     }
 
     @Override
