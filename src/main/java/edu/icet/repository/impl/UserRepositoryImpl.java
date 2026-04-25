@@ -74,13 +74,16 @@ public class UserRepositoryImpl implements UserRepository {
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+            LocalDateTime createdAt = user.getCreatedAt() != null ? user.getCreatedAt() : LocalDateTime.now();
+            LocalDateTime updatedAt = user.getUpdateAt() != null ? user.getUpdateAt() : LocalDateTime.now();
+
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPasswordHash());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getFullname());
             stmt.setString(5, user.getRole());
-            stmt.setObject(6, LocalDateTime.now());
-            stmt.setObject(7, LocalDateTime.now());
+            stmt.setObject(6, createdAt);
+            stmt.setObject(7, updatedAt);
             stmt.setBoolean(8, user.isActive());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -94,12 +97,14 @@ public class UserRepositoryImpl implements UserRepository {
                      "role = ?, updated_at = ?, is_active = ? WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+            LocalDateTime updatedAt = user.getUpdateAt() != null ? user.getUpdateAt() : LocalDateTime.now();
+
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPasswordHash());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getFullname());
             stmt.setString(5, user.getRole());
-            stmt.setObject(6, LocalDateTime.now());
+            stmt.setObject(6, updatedAt);
             stmt.setBoolean(7, user.isActive());
             stmt.setLong(8, user.getId());
             return stmt.executeUpdate() > 0;

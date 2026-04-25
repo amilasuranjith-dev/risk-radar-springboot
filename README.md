@@ -81,6 +81,28 @@ CREATE DATABASE risk_radar_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 - Rotate secrets regularly in production
 - Use separate credentials for dev, staging, and production environments
 
+## Common Startup Errors
+
+### `Access denied for user 'root'@'localhost' (using password: NO)`
+
+This means MySQL rejected the connection because **no password** was provided.
+
+Fix it by setting:
+- `DB_PASSWORD` (required if your MySQL user has a password)
+
+Example (PowerShell):
+```powershell
+$env:DB_PASSWORD = "your_mysql_password"
+```
+
+### Hibernate Dialect error (`Unable to determine Dialect without JDBC metadata`)
+
+This typically happens *after* the DB connection fails, because Hibernate can't read metadata.
+
+You can also override Hibernate behavior via env vars:
+- `HIBERNATE_DDL_AUTO` (e.g., `update`, `validate`, `none`)
+- `HIBERNATE_DIALECT` (defaults to `org.hibernate.dialect.MySQLDialect`)
+
 ## Project Structure
 
 ```
@@ -108,4 +130,3 @@ The project is organized into logical feature commits:
 8. Build Dependencies
 
 This structure makes it easy to understand and review each feature independently.
-

@@ -2,10 +2,16 @@ spring:
   datasource:
     url: ${DB_URL:jdbc:mysql://localhost:3306/risk_radar_db}
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO:none}
+    properties:
+      hibernate:
+        dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.MySQLDialect}
 
 # JWT Configuration
 app:
   jwt:
-    secret: ${JWT_SECRET}
+    secret: ${JWT_SECRET:bf233b3dccfe253d33b3eebb7ead17669d96420d4b2836aaae72b500f453c954}
     expiration: ${JWT_EXPIRATION:3600000}  # 1 hour in milliseconds
