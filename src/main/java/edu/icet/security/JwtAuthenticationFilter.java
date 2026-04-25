@@ -7,11 +7,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 
 
 @Component
@@ -40,14 +44,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     // Store in request attributes for use in controllers
                     request.setAttribute(USERNAME_ATTRIBUTE, username);
                     request.setAttribute(ROLE_ATTRIBUTE, role);
+
+                    // Populate Spring Security's SecurityContext for authorization
+                    UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
+                            username,
+                            null,
+                            Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role))
+                        );
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
                 } else {
                     logger.warn("Invalid or expired JWT token");
                 }
             }
         } catch (JwtException e) {
-            logger.error("JWT token validation failed: " + e.getMessage());
+            logger.error("JWT token validation failed", e);
         } catch (Exception e) {
-            logger.error("Unexpected error during JWT processing: " + e.getMessage());
+            logger.error("Unexpected error during JWT processing", e);
         }
 
         filterChain.doFilter(request, response);
@@ -58,6 +71,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(BEARER_PREFIX)) {
             return authorizationHeader.substring(BEARER_PREFIX.length());
         }
-        return null; //JWT token, or null if not found
+        return null;
     }
 }
