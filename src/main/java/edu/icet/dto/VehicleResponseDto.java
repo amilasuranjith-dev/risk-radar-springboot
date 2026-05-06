@@ -1,9 +1,8 @@
-package edu.icet.model;
+package edu.icet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,8 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Vehicle {
+public class VehicleResponseDto {
     private Long id;
     private String licensePlate;
     private String model;
@@ -26,3 +24,5 @@ public class Vehicle {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
+
+

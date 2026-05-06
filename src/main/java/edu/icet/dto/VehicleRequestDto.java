@@ -1,19 +1,15 @@
-package edu.icet.model;
+package edu.icet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Vehicle {
-    private Long id;
+public class VehicleRequestDto {
     private String licensePlate;
     private String model;
     private String manufacturer;
@@ -23,6 +19,6 @@ public class Vehicle {
     private String fuelType;
     private String status;
     private LocalDate lastMaintenanceDate;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }
+
+
