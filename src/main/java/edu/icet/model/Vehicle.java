@@ -19,7 +19,7 @@ public class Vehicle {
     private String manufacturer;
     private Integer year;
     private String vehicleType;
-    private Double capacityType;
+    private Double capacityKg;
     private String fuelType;
     private String status;
     private LocalDate lastMaintenanceDate;
