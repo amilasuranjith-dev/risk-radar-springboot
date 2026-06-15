@@ -46,3 +46,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Project Documentation ###
+DB-schema.txt
+ProjectProposal.txt
